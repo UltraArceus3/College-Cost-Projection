@@ -2,17 +2,12 @@
 import warnings
 warnings.simplefilter(action = 'ignore')
 
-# Trys importing multi-processing pandas, if it fails, imports regular pandas
-try: 
-    import modin.pandas as pd
-except ImportError:
-    import pandas as pd
+import pandas as pd
 
 
 # Imports and cleans database, returns dataframe and a list of colleges
-def get_data(path = "../data/collegeinsight_data_nolabel_ICs_by_year.csv") -> tuple(pd.DataFrame, list):
-    db = read_csv(path, encoding = 'unicode_escape')
-
+def get_data(path = "../data/collegeinsight_data_nolabel_ICs_by_year.csv"):
+    db = pd.read_csv(path, encoding = 'unicode_escape')
 
     pred_data = ['coa_tuit_fees_d', 'coa_books_supp_d', 'coa_on_room_board_d']
 
@@ -41,7 +36,7 @@ def get_data(path = "../data/collegeinsight_data_nolabel_ICs_by_year.csv") -> tu
 
 
 # Reformats data into three dataframes organized by college and year, one for tuition, one for books & supplies, and one for room & board
-def reformat_data(db: pd.DataFrame, colleges: list) -> tuple(pd.DataFrame, pd.DataFrame, pd.DataFrame):
+def reformat_data(db: pd.DataFrame, colleges: list):
     yrs = sorted(list(set(db['data_yr_string'])))
     years = [int(x.split("-")[0]) for x in yrs]
 
@@ -57,9 +52,11 @@ def reformat_data(db: pd.DataFrame, colleges: list) -> tuple(pd.DataFrame, pd.Da
 
 
     for i in range(len(colleges)):
-        tuition = [db[db['name'] == colleges[i]][db['data_yr_string'] == x]['coa_tuit_fees_d'].values[0] for x in yrs]
-        supplies = [db[db['name'] == colleges[i]][db['data_yr_string'] == x]['coa_books_supp_d'].values[0] for x in yrs]
-        room = [db[db['name'] == colleges[i]][db['data_yr_string'] == x]['coa_on_room_board_d'].values[0] for x in yrs]
+        c_db = db[db['name'] == colleges[i]]
+        
+        tuition = [c_db[c_db['data_yr_string'] == x]['coa_tuit_fees_d'].values[0] for x in yrs]
+        supplies = [c_db[c_db['data_yr_string'] == x]['coa_books_supp_d'].values[0] for x in yrs]
+        room = [c_db[c_db['data_yr_string'] == x]['coa_on_room_board_d'].values[0] for x in yrs]
         #print([college] + tuition)
         #row = pd.DataFrame([colleges[i]] + tuition, columns = columns)
         #print(row)
@@ -79,4 +76,4 @@ def save_data(df, name, path = "../data/", **kwargs):
 
 # Loads dataframes from csv files
 def load_data(name, path = "../data/", **kwargs):
-    return read_csv(path + name + ".csv", **kwargs)
+    return pd.read_csv(path + name + ".csv", **kwargs)
