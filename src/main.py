@@ -1,8 +1,13 @@
 import data
+import os
 
 if __name__ == "__main__":
     _data_path = "../data/"
     csv_path = _data_path + "collegeinsight_data_nolabel_ICs_by_year.csv"
+
+    if not os.path.exists(csv_path):
+        print("Data not found, downloading...")
+        data.download_data(path = _data_path)
 
     try:
         tuition_db, supplies_db, room_db = data.load_data(path = _data_path)

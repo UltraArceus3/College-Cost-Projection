@@ -4,6 +4,16 @@ warnings.simplefilter(action = 'ignore')
 
 import pandas as pd
 
+# Downloads data from college-insight.org
+def download_data(page = "https://college-insight.org/wp-content/uploads/2020/10/CIS-Data-and-Codebook-20-10-06.zip", path = "../data/"):
+    import requests
+    import zipfile
+    import io
+
+    r = requests.get(page)
+
+    z = zipfile.ZipFile(io.BytesIO(r.content))
+    z.extractall(path)
 
 # Imports and cleans database, returns dataframe and a list of colleges
 def get_data(path = "../data/collegeinsight_data_nolabel_ICs_by_year.csv"):
