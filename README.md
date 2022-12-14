@@ -1,6 +1,6 @@
 # College-Cost-Projection
  
-The dataset is downloaded from https://college-insight.org, which has the following license:
+The dataset used is from https://college-insight.org, which has the following license:
 ```
  The Institute for College Access & Success. College Insight, https://college-insight.org. 
  Student debt and undergraduate financial aid data are licensed from Peterson's Undergraduate Financial Aid and Undergraduate Databases, ©️ 2020 Peterson's LLC, all rights reserved. 
