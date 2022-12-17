@@ -1,6 +1,7 @@
 import data
 import os
 import graph
+import random
 
 if __name__ == "__main__":
     _data_path = "../data/"
@@ -23,5 +24,6 @@ if __name__ == "__main__":
         data.save_data(supplies_db, "supplies", path = _data_path)
         data.save_data(room_db, "room", path = _data_path)
 
+    colleges = list(tuition_db["name"])
     
-    graph.plot_college_data("UNIVERSITY OF CONNECTICUT", tuition_db, supplies_db, room_db, [2000, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018])
+    graph.plot_college_data(colleges[random.randint(0, len(colleges))], tuition_db, supplies_db, room_db, [2000, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018])

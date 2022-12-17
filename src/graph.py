@@ -23,7 +23,7 @@ def plot_prediction(db, predict, college, years, predict_years, **kwargs):
 
 def plot_college_data(college, tuition_db, supplies_db, room_db, years, **kwargs):
 
-    predict_years = [2019, 2020]
+    predict_years = [2019, 2020, 2021, 2022]
     predict = PolyRegModel(4)
 
     plt.figure(figsize=(10, 5))
